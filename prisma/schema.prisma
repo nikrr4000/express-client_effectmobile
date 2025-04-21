@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Appeal {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  status       AppealStatus
+  topic        String
+  description  String?
+  resolution   AppealResolution?
+  cancellation AppealCancellation?
+}
+
+model AppealResolution {
+  id          String        @id @default(cuid())
+  appealId    String        @unique
+  text        String
+  appeal      Appeal        @relation(fields: [appealId], references: [id])
+}
+
+model AppealCancellation {
+  id          String        @id @default(cuid())
+  appealId    String        @unique
+  reason      String
+  appeal      Appeal        @relation(fields: [appealId], references: [id])
+}
+
+enum AppealStatus {
+  NEW
+  PENDING
+  RESOLVED
+  CANCELED
+}
+
+
