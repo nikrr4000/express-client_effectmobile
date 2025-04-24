@@ -1,11 +1,5 @@
+import errorCodes from '#root/config/errorCodes';
 import { Response } from 'express';
-
-export const errorCodes = {
-  not_found: 404,
-  validation: 400,
-  server: 500,
-  forbidden: 403,
-};
 
 type ErrorCodes = typeof errorCodes;
 
