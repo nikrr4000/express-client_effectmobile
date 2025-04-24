@@ -1,11 +1,7 @@
 import express, { Router } from 'express';
-import { 
-    createAppealCtrl, 
-    takeAppealCtrl,
-    completeAppealCtrl,
-    cancelAppealCtrl,
-    cancelAllAppealsCtrl,
-    listAppealsCtrl, } from '@/controllers/index';
+import {
+  appealController
+} from '@/controllers/index';
 
 const router: Router = express.Router();
 
@@ -148,7 +144,7 @@ const router: Router = express.Router();
 
 /**
  * @swagger
- * /appeal/create:
+ * /appeals:
  *   post:
  *     summary: Create a new appeal
  *     tags: [Appeals]
@@ -169,7 +165,7 @@ const router: Router = express.Router();
  *                 description: Optional detailed description of the appeal
  *                 nullable: true
  *     responses:
- *       200:
+ *       201:
  *         description: Appeal created successfully
  *         content:
  *           application/json:
@@ -187,16 +183,16 @@ const router: Router = express.Router();
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.post('/create', createAppealCtrl);
+router.post('/', appealController.create);
 
 /**
  * @swagger
- * /appeal/take:
+ * /appeals/{id}/take:
  *   patch:
  *     summary: Take an appeal
  *     tags: [Appeals]
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         required: true
  *         schema:
@@ -214,29 +210,36 @@ router.post('/create', createAppealCtrl);
  *                   type: boolean
  *                 data:
  *                   $ref: '#/components/schemas/AppealTaken'
+ *       404:
+ *         description: Appeal not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
  *       400:
- *         description: Invalid request parameters
+ *         description: Invalid request or appeal cannot be taken
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.patch('/take', takeAppealCtrl);
+router.patch('/:id/take', appealController.take);
 
 /**
  * @swagger
- * /appeal/complete:
+ * /appeals/{id}/complete:
  *   patch:
  *     summary: Complete an appeal
  *     tags: [Appeals]
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
  *         description: The ID of the appeal to complete
  *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
@@ -259,17 +262,29 @@ router.patch('/take', takeAppealCtrl);
  *                   type: boolean
  *                 data:
  *                   $ref: '#/components/schemas/AppealResolved'
+ *       404:
+ *         description: Appeal not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
+ *       400:
+ *         description: Invalid request or appeal cannot be completed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
  */
-router.patch('/complete', completeAppealCtrl);
+router.patch('/:id/complete', appealController.complete);
 
 /**
  * @swagger
- * /appeal/cancel:
+ * /appeals/{id}/cancel:
  *   patch:
  *     summary: Cancel an appeal
  *     tags: [Appeals]
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         required: true
  *         schema:
@@ -297,12 +312,24 @@ router.patch('/complete', completeAppealCtrl);
  *                   type: boolean
  *                 data:
  *                   $ref: '#/components/schemas/AppealCanceled'
+ *       404:
+ *         description: Appeal not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
+ *       400:
+ *         description: Invalid request or appeal cannot be cancelled
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
  */
-router.patch('/cancel', cancelAppealCtrl);
+router.patch('/:id/cancel', appealController.cancel);
 
 /**
  * @swagger
- * /appeal/cancel/all:
+ * /appeals/cancel-all:
  *   patch:
  *     summary: Cancel all appeals
  *     tags: [Appeals]
@@ -321,11 +348,11 @@ router.patch('/cancel', cancelAppealCtrl);
  *                   items:
  *                     $ref: '#/components/schemas/AppealCanceled'
  */
-router.patch('/cancel/all', cancelAllAppealsCtrl);
+router.patch('/cancel-all', appealController.cancelAll);
 
 /**
  * @swagger
- * /appeal/list:
+ * /appeals:
  *   get:
  *     summary: Get list of appeals
  *     tags: [Appeals]
@@ -360,7 +387,13 @@ router.patch('/cancel/all', cancelAllAppealsCtrl);
  *                   type: boolean
  *                 data:
  *                   $ref: '#/components/schemas/AppealList'
+ *       400:
+ *         description: Invalid query parameters
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/responses/Error'
  */
-router.get('/list', listAppealsCtrl);
+router.get('/', appealController.list);
 
 export default router;

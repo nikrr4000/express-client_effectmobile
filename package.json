@@ -5,10 +5,12 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "tsx watch --include './src/*' src/index.ts",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
     "db:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev",
-    "db:reset": "dotenv -e .env.development -- npx prisma migrate reset"
+    "db:reset": "dotenv -e .env.development -- npx prisma migrate reset",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\""
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -31,6 +33,7 @@
     "@types/node": "^18.15.11",
     "dotenv-cli": "^8.0.0",
     "nodemon": "^2.0.22",
+    "prettier": "^3.5.3",
     "prisma": "^6.6.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"

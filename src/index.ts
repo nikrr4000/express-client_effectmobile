@@ -7,7 +7,6 @@ import { prisma } from './lib/db';
 import { logger } from './middleware/logger';
 import { swaggerSpec } from './config/swagger';
 
-
 dotenv.config();
 
 const app: Express = express();
@@ -21,11 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/appeal', routes);
-
-// app.get('/', async (req: Request, res: Response) => {
-
-// });
+app.use('/appeals', routes);
 
 app.listen(port, () => {
   console.log('Listening on port', port);
