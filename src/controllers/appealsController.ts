@@ -7,7 +7,7 @@ import {
   completeAppeal,
   cancelAppeal,
   cancelAllAppeals,
-} from '@/entities/appeals/index';
+} from '#root/entities/appeals/index.js';
 import { errorHandler, isValidDate } from './utils';
 
 export const appealController = {
@@ -44,7 +44,7 @@ export const appealController = {
     }
   },
   take: async (req: Request, res: Response) => {
-    try {      
+    try {
       const { id } = req.params;
 
       if (!id) {
@@ -197,7 +197,7 @@ export const appealController = {
       if (result.type === 'error') {
         return errorHandler(res, result.errorType, result.value as string);
       }
-      
+
       return res.status(200).json({
         success: true,
         data: result.value,

@@ -1,12 +1,12 @@
-import { prisma } from '@/lib/db';
+import { prisma } from '#root/lib/db.js';
 import {
   AppealCanceled,
   AppealWithRelations,
   AppealResolved,
   AppealPending,
   AppealCreated,
-} from '../domain';
-import { cleanUnnecessaryAppealFields, createResultObj, ResultObj } from '../services/utils';
+} from '../domain.js';
+import { cleanUnnecessaryAppealFields, createResultObj, ResultObj } from '../services/utils.js';
 
 const create = async (topic: string, description?: string) => {
   try {

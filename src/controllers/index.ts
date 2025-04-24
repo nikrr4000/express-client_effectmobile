@@ -1,1 +1,1 @@
-export * from './appealsController';
+export * from './appealsController.js';

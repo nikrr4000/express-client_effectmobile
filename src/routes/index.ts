@@ -1,7 +1,5 @@
 import express, { Router } from 'express';
-import {
-  appealController
-} from '@/controllers/index';
+import { appealController } from '#root/controllers/index.js';
 
 const router: Router = express.Router();
 

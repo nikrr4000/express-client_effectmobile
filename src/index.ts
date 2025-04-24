@@ -2,10 +2,8 @@ import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import routes from './routes';
-import { prisma } from './lib/db';
-import { logger } from './middleware/logger';
-import { swaggerSpec } from './config/swagger';
+import routes from '#root/routes/index.js';
+import { swaggerSpec } from './config/swagger.js';
 
 dotenv.config();
 

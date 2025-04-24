@@ -1,5 +1,5 @@
-import { AppealCanceled, AppealWithRelations, AppealResolved } from '../domain';
-import appeal from '../repository/appeal';
+import { AppealCanceled, AppealWithRelations, AppealResolved } from '../domain.js';
+import appeal from '../repository/appeal.js';
 
 type ErrorTypes = 'not_found' | 'validation' | 'server' | 'forbidden';
 export type ResultObj<T> = {
@@ -27,9 +27,9 @@ export const cleanUnnecessaryAppealFields = (appeal: AppealWithRelations) => {
 export const createAppealsList = async () => {
   try {
     const result = await appeal.findAll({ resolution: true, cancellation: true });
-    
-    if (result.type === "error"){
-      return createResultObj("error", result.value, result.errorType);
+
+    if (result.type === 'error') {
+      return createResultObj('error', result.value, result.errorType);
     }
 
     return createResultObj('ok', result.value);
@@ -67,14 +67,14 @@ export const findAppealsByDateQuery = async (leftDateStr: string, rightDateStr?:
       rightBorder = new Date(new Date(leftDateStr).setHours(23, 59, 59, 999));
     }
 
-    const result = await appeal.findAll({ 
-      datesQuery: [leftBorder, rightBorder], 
-      resolution: true, 
-      cancellation: true 
+    const result = await appeal.findAll({
+      datesQuery: [leftBorder, rightBorder],
+      resolution: true,
+      cancellation: true,
     });
-    
-    if (result.type === "error"){
-      return createResultObj("error", result.value, result.errorType);
+
+    if (result.type === 'error') {
+      return createResultObj('error', result.value, result.errorType);
     }
 
     return createResultObj('ok', result.value);

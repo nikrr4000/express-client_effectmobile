@@ -2,12 +2,15 @@ FROM node:23-slim
 
 WORKDIR /usr/src/app
 
+# Install OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
+
 COPY package*.json ./
 COPY prisma ./prisma/
 COPY tsconfig.json ./
 COPY .env ./
 
-RUN npm install
+RUN npm ci
 RUN npx prisma generate
 
 COPY . .
