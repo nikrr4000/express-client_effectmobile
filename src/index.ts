@@ -1,36 +1,33 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import routes from './routes';
 import { prisma } from './lib/db';
-import {createAppeal, findAppeals, updateAppealStatus} from "@/entities/appeals/index"
+import { logger } from './middleware/logger';
+import { swaggerSpec } from './config/swagger';
 
-// Загрузка переменных среды
+
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(logger)
 
-// Маршруты
-app.use('/api', routes);
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Базовый маршрут
-app.get('/', async (req: Request, res: Response) => {
-  const data = await findAppeals([new Date(), new Date()])
-  res.send(data);
-});
+app.use('/appeal', routes);
 
-app.get('/create', async (_: Request, res: Response) => {
-  const data = await createAppeal("Some new info")
-  res.send(data);
-});
+// app.get('/', async (req: Request, res: Response) => {
 
-// Запуск сервера
+// });
+
 app.listen(port, () => {
   console.log('Listening on port', port);
+  console.log(`Swagger documentation available at http://localhost:${port}/api-docs`);
 });

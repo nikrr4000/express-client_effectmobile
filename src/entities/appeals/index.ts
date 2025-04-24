@@ -1,1 +1,1 @@
-export * from "./repository/appeal"
+export * from "./services/utils"

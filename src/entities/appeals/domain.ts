@@ -1,30 +1,48 @@
-export type AppealEntity = 
-    AppealCreated | 
-    AppealPending |
-    AppealCanceled | 
-    AppealResolved
+export type Resolution = {
+    id: string;
+    appealId: string;
+    text: string;
+}
+
+export type Cancellation = {
+    id: string;
+    appealId: string;
+    reason: string;
+}
 
 export type Appeal = {
     id: string;
     topic: string;
     description: string | null;
-    createdAt: Date
+    createdAt: string | Date;
 }
 
 export type AppealPending = Appeal & {
-    status: "PENDING"
+    status: "PENDING";
+    resolution: null;
+    cancellation: null;
 }
 
 export type AppealCreated = Appeal & {
-    status: "NEW"
+    status: "NEW";
+    resolution: null;
+    cancellation: null;
 }
 
 export type AppealResolved = Appeal & {
-    status: "RESOLVED",
-    text?: string
+    status: "RESOLVED";
+    resolution: Resolution | null;
+    cancellation: null;
 }
 
 export type AppealCanceled = Appeal & {
-    status: "CANCELED"
-    reason?: string;
+    status: "CANCELED";
+    resolution: null;
+    cancellation: Cancellation | null;
 }
+
+export type AppealWithRelations = 
+    | AppealPending 
+    | AppealCreated 
+    | AppealResolved 
+    | AppealCanceled;
