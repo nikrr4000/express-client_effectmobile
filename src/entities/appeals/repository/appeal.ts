@@ -6,7 +6,7 @@ import {
   AppealPending,
   AppealCreated,
 } from '../domain.js';
-import { cleanUnnecessaryAppealFields, createResultObj, ResultObj } from '../services/utils.js';
+import { cleanUnnecessaryAppealFields, createResultObj, ResultObj } from '../utils.js';
 
 const create = async (topic: string, description?: string) => {
   try {
