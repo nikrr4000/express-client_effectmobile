@@ -9,7 +9,6 @@ export const errorHandler = (
   error: string
 ) => {
   const errorCode = errorType ? errorCodes[errorType] : 500;
-
   return res.status(errorCode).json({ error });
 };
 

@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/usr/src/app/src/generated/prisma",
+      "value": "/Users/nikitaromanov/Documents/codin/tests/express-client_effectmobile/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -156,20 +156,24 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-arm64-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       },
       {
         "fromEnvVar": null,
         "value": "linux-arm64-openssl-1.1.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "darwin-arm64"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/usr/src/app/prisma/schema.prisma",
+    "sourceFilePath": "/Users/nikitaromanov/Documents/codin/tests/express-client_effectmobile/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -188,8 +192,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"linux-arm64-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Appeal {\n  id           String              @id @default(cuid())\n  createdAt    DateTime            @default(now())\n  status       AppealStatus\n  topic        String\n  description  String?\n  resolution   AppealResolution?\n  cancellation AppealCancellation?\n}\n\nmodel AppealResolution {\n  id       String @id @default(cuid())\n  appealId String @unique\n  text     String\n  appeal   Appeal @relation(fields: [appealId], references: [id])\n}\n\nmodel AppealCancellation {\n  id       String @id @default(cuid())\n  appealId String @unique\n  reason   String\n  appeal   Appeal @relation(fields: [appealId], references: [id])\n}\n\nenum AppealStatus {\n  NEW\n  PENDING\n  RESOLVED\n  CANCELED\n}\n",
-  "inlineSchemaHash": "5f1b1412ca4e12f0df15530e70991c0d6b629cb5d53157dd5e59556610724862",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"linux-arm64-openssl-1.1.x\", \"darwin-arm64\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Appeal {\n  id           String              @id @default(cuid())\n  createdAt    DateTime            @default(now())\n  status       AppealStatus\n  topic        String\n  description  String?\n  resolution   AppealResolution?\n  cancellation AppealCancellation?\n}\n\nmodel AppealResolution {\n  id       String @id @default(cuid())\n  appealId String @unique\n  text     String\n  appeal   Appeal @relation(fields: [appealId], references: [id])\n}\n\nmodel AppealCancellation {\n  id       String @id @default(cuid())\n  appealId String @unique\n  reason   String\n  appeal   Appeal @relation(fields: [appealId], references: [id])\n}\n\nenum AppealStatus {\n  NEW\n  PENDING\n  RESOLVED\n  CANCELED\n}\n",
+  "inlineSchemaHash": "0ba2dc222f6fc27136321b77dff84f0b6faa788192df2fc05122823dbbcb6bf9",
   "copyEngine": true
 }
 
@@ -228,8 +232,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "libquery_engine-linux-arm64-openssl-3.0.x.so.node");
-path.join(process.cwd(), "src/generated/prisma/libquery_engine-linux-arm64-openssl-3.0.x.so.node")
+path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-darwin-arm64.dylib.node")
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-linux-arm64-openssl-1.1.x.so.node");

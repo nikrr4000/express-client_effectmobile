@@ -9,6 +9,7 @@ import {
   cancelAllAppeals,
 } from '#root/entities/appeals/index.js';
 import { errorHandler, isValidDate } from './utils';
+import z from 'zod';
 
 export const appealController = {
   create: async (req: Request, res: Response) => {
@@ -161,7 +162,12 @@ export const appealController = {
   },
   list: async (req: Request, res: Response) => {
     try {
-      const { date, startDate, endDate } = req.query;
+      const { date, startDate, endDate, page, limit } = req.query;
+
+      const pageNum = page ? +page : 1;
+      const limitNum = limit ? +limit : 10;
+
+      const skip = (pageNum - 1) * limitNum
 
       let result;
 
@@ -191,7 +197,7 @@ export const appealController = {
 
         result = await findAppealsByDateQuery(startDate.toString(), endDate.toString());
       } else {
-        result = await createAppealsList();
+        result = await createAppealsList(skip, limitNum);
       }
 
       if (result.type === 'error') {

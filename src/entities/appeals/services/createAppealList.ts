@@ -1,9 +1,9 @@
 import appeal from "../repository/appeal";
 import { createResultObj } from "../utils";
 
-export const createAppealsList = async () => {
+export const createAppealsList = async (skip:number, take: number) => {
     try {
-      const result = await appeal.findAll({ resolution: true, cancellation: true });
+      const result = await appeal.findAll({ resolution: true, cancellation: true, skip, take });
   
       if (result.type === 'error') {
         return createResultObj('error', result.value, result.errorType);
