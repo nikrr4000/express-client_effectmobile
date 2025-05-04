@@ -1,5 +1,7 @@
 import express, { Router } from 'express';
 import { appealController } from '#root/controllers/index.js';
+import { validate } from '#root/middleware/validator';
+import { appealSchema } from "#root/schemas" 
 
 const router: Router = express.Router();
 
@@ -392,6 +394,6 @@ router.patch('/cancel-all', appealController.cancelAll);
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.get('/', appealController.list);
+router.get('/', validate(appealSchema.querySchema), appealController.list);
 
 export default router;

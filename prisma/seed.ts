@@ -11,16 +11,7 @@ const createTopic = (name:string) => prisma.appeal.create({
 })
 
 async function main(): Promise<void> {
-  try {
-    
-    const appeal1 = await createTopic('first')
-    const appeal2 = await createTopic('second')
-    const appeal3 = await createTopic('third')
-    
-  } catch (error) {
-    console.error("Error seeding database:", error);
-    throw error;
-  }
+  
 }
 main()
   .then(async () => {

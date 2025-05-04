@@ -216,10 +216,14 @@ const findAll = async ({
   datesQuery,
   resolution,
   cancellation,
+  take = 10,
+  skip = 10
 }: {
   datesQuery?: [Date, Date];
   resolution?: boolean;
   cancellation?: boolean;
+  take?: number;
+  skip?: number
 }) => {
   try {
     const where = datesQuery
@@ -234,6 +238,8 @@ const findAll = async ({
     const appeals = (await prisma.appeal
       .findMany({
         where,
+        take,
+        skip,
         orderBy: {
           createdAt: 'desc',
         },
@@ -257,7 +263,7 @@ const handleRepositoryError = (e: unknown, operation: string): ResultObj<string>
   console.error(`Error in ${operation}:`, error);
   return createResultObj(
     'error',
-    error.message || 'Internal error.',
+    'Internal error.',
     error.name === 'PrismaClientKnownRequestError' ? 'not_found' : 'server'
   );
 };
