@@ -146,7 +146,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/usr/src/app/src/generated/prisma",
+      "value": "/Users/nikitaromanov/Documents/codin/tests/express-client_effectmobile/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -155,7 +155,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "linux-arm64-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       },
       {
@@ -164,11 +164,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/usr/src/app/prisma/schema.prisma",
+    "sourceFilePath": "/Users/nikitaromanov/Documents/codin/tests/express-client_effectmobile/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -178,12 +178,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
       }
     }
   },

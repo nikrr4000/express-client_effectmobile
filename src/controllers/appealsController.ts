@@ -8,7 +8,7 @@ import {
   cancelAppeal,
   cancelAllAppeals,
 } from '#root/entities/appeals/index.js';
-import { errorHandler, isValidDate } from './utils';
+import { isValidDate } from './utils';
 
 export const appealController = {
   create: async (req: Request, res: Response) => {
@@ -161,7 +161,8 @@ export const appealController = {
   },
   list: async (req: Request, res: Response) => {
     try {
-      const { date, startDate, endDate } = req.query;
+      const { date, startDate, endDate, page, pageSize } = req.query;
+      const skip = (page - 1) * pageSize
 
       let result;
 
@@ -191,7 +192,7 @@ export const appealController = {
 
         result = await findAppealsByDateQuery(startDate.toString(), endDate.toString());
       } else {
-        result = await createAppealsList();
+        result = await createAppealsList(pageSize, skip);
       }
 
       if (result.type === 'error') {
