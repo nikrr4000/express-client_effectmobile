@@ -5,6 +5,8 @@ import { appealSchema } from "#root/schemas"
 
 const router: Router = express.Router();
 
+router.use(express.json({limit: '100kb'}))
+
 /**
  * @swagger
  * components:
@@ -183,7 +185,11 @@ const router: Router = express.Router();
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.post('/', appealController.create);
+router.post(
+    '/', 
+    validate(appealSchema.createAppealSchema),
+    appealController.create
+);
 
 /**
  * @swagger
@@ -223,7 +229,11 @@ router.post('/', appealController.create);
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.patch('/:id/take', appealController.take);
+router.patch(
+    '/:id/take', 
+    validate(appealSchema.appealIdParamSchema, 'params'),
+    appealController.take
+);
 
 /**
  * @swagger
@@ -275,7 +285,11 @@ router.patch('/:id/take', appealController.take);
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.patch('/:id/complete', appealController.complete);
+router.patch(
+    '/:id/complete', 
+    validate(appealSchema.appealIdParamSchema, 'params'), 
+    validate(appealSchema.completeAppealSchema), 
+    appealController.complete);
 
 /**
  * @swagger
@@ -325,7 +339,12 @@ router.patch('/:id/complete', appealController.complete);
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.patch('/:id/cancel', appealController.cancel);
+router.patch(
+    '/:id/cancel', 
+    validate(appealSchema.appealIdParamSchema, 'params'), 
+    validate(appealSchema.cancelAppealSchema), 
+    appealController.cancel
+);
 
 /**
  * @swagger
@@ -394,6 +413,6 @@ router.patch('/cancel-all', appealController.cancelAll);
  *             schema:
  *               $ref: '#/components/responses/Error'
  */
-router.get('/', validate(appealSchema.querySchema), appealController.list);
+router.get('/', validate(appealSchema.appealListQuerySchema, 'query'), appealController.list);
 
 export default router;
